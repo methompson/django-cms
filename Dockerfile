@@ -1,15 +1,14 @@
 FROM python:3.7
 
-RUN mkdir -p /srv/django/fileviewer
-RUN mkdir -p /srv/django/fileviewer-backup
-WORKDIR /srv/django/fileviewer
+RUN mkdir -p /srv/django/cms
+WORKDIR /srv/django/cms
 
 #install the rest of the dependencies
 RUN pip install gunicorn requests Pillow django psycopg2-binary python-decouple djangorestframework djangorestframework_simplejwt
 
-COPY . /srv/django/fileviewer
-RUN cd fileviewerProject && python manage.py collectstatic --no-input
+#COPY . /srv/django/cms
+#RUN cd cmsproject && python manage.py collectstatic --no-input
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--chdir", "fileviewerProject", "--bind", ":8000", "fileviewerProject.wsgi:application"]
+CMD ["gunicorn", "--chdir", "cmsproject", "--bind", ":8000", "cmsproject.wsgi:application"]

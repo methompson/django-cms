@@ -1,0 +1,3 @@
+POSTGRES_USER=cms_user
+POSTGRES_PASSWORD=kjb67fytlyug89yfyucdhvj
+POSTGRES_DB=cmsdb

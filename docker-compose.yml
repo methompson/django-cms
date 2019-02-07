@@ -6,7 +6,6 @@ services:
     volumes:
       - .:/srv/django/cms
       - ./static:/srv/django/cms/static
-      #- static_volume:/srv/django/fileviewer/static
       - media_volume:/srv/django/cms/media
     networks:
       - nginx_network
@@ -21,7 +20,6 @@ services:
     volumes:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
       - ./static:/srv/django/cms/static
-      #- static_volume:/srv/django/fileviewer/static
       - media_volume:/srv/django/cms/media
     depends_on:
       - djangoapp
@@ -31,7 +29,7 @@ services:
   database1:
     image: postgres:10
     env_file:
-      - config/db/database1_env
+      - config/db/cmsdb_env
     networks:
       - database1_network
     volumes:
