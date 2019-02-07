@@ -4,10 +4,10 @@ services:
   djangoapp:
     build: .
     volumes:
-      - .:/srv/django/fileviewer
-      - ./static:/srv/django/fileviewer/static
+      - .:/srv/django/cms
+      - ./static:/srv/django/cms/static
       #- static_volume:/srv/django/fileviewer/static
-      - media_volume:/srv/django/fileviewer/media
+      - media_volume:/srv/django/cms/media
     networks:
       - nginx_network
       - database1_network
@@ -20,9 +20,9 @@ services:
       - 8000:80
     volumes:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
-      - ./static:/srv/django/fileviewer/static
+      - ./static:/srv/django/cms/static
       #- static_volume:/srv/django/fileviewer/static
-      - media_volume:/srv/django/fileviewer/media
+      - media_volume:/srv/django/cms/media
     depends_on:
       - djangoapp
     networks:
