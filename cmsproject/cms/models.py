@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Page(models.Model):
     title = models.CharField(max_length=1023)
-    slug = models.SlugField()
+    url = models.SlugField()
     content = models.TextField()
     published = models.BooleanField()
     createdDate = models.DateTimeField(blank=True, auto_now_add=True)

@@ -1,0 +1,14 @@
+{% extends 'theme/theme.html' %}
+
+{% block title %}Log In{% endblock %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form.visible_fields %}
+      <label>{{field.label}}</label>
+      {{field}}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </form>
+{% endblock %}
