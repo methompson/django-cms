@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Page(models.Model):
     title = models.CharField(max_length=1023)
-    url = models.SlugField()
+    url = models.SlugField(unique=True)
     content = models.TextField()
     published = models.BooleanField()
     createdDate = models.DateTimeField(blank=True, auto_now_add=True)
@@ -16,12 +16,12 @@ class Page(models.Model):
     parent = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return slug
+        return self.title
 
 class Media(models.Model):
     name = models.CharField(max_length=1023)
     link = models.URLField(max_length=1023)
-    Image = models.ImageField()
+    #Image = models.ImageField()
     File = models.FileField()
     size = models.FloatField()
     published = models.BooleanField()
@@ -31,4 +31,4 @@ class Media(models.Model):
     updatedBy = models.ForeignKey(User, blank=True, null=True, related_name='+', on_delete=models.SET_NULL)
 
     def __str__(self_):
-        return link
+        return self.link

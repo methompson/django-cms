@@ -1,0 +1,25 @@
+{% if error %}
+  <strong>{{ error }}</strong>
+{% endif %}
+
+{% if form.non_field_errors %}
+  {% for error in form.non_field_errors %}
+    <strong>{{ error }}</strong>
+  {% endfor %}
+{% endif %}
+
+{% for field in form.hidden_fields %}
+  {% for error in field.errors %}
+    <strong>{{ error }}</strong>
+  {% endfor %}
+{% endfor %}
+
+{% for field in form.visible_fields %}
+  {% for error in field.errors %}
+    <strong>{{ error }}</strong>
+  {% endfor %}
+  <div class='formElement'>
+    <label>{{field.label}}</label>
+    {{field}}
+  </div>
+{% endfor %}
