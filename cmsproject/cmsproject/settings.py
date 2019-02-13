@@ -125,8 +125,14 @@ STATIC_URL = '/static/'
 
 #STATIC_URL = '/cms/static/'
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static')
+#MEDIA_ROOT = os.path.join('media')
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
+STATICFILES_DIRS = [
+    #os.path.join(BASE_DIR, 'static'),
+    #'/Users/mathewthompson/Documents/dev/docker/django-cms/static'
+    os.path.join(BASE_DIR, '..', 'static'),
+]
 
 LOGIN_REDIRECT_URL = 'home'

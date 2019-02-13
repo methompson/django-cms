@@ -20,6 +20,10 @@ def squares(request):
     return render(request, 'squares.html')
     #return HttpResponse("Hello, world. You're home.")
 
+def squares_old(request):
+    return render(request, 'squares-old.html')
+    #return HttpResponse("Hello, world. You're home.")
+
 @login_required
 def newPage(request):
     if request.method == 'POST':
