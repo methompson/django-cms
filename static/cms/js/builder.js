@@ -1,11 +1,11 @@
 Vue.component('cmscontainer',{
-  props:['k'],
+  props:['index', 'fraction'],
   template:'#cmscontainer',
   methods:{
     removeEl : function() {
       console.log("Deleted!");
-      console.log(this.k);
-      this.$parent.deleteContainer(this.k);
+
+      this.$parent.deleteContainer(this.index);
     }
   }
 });
@@ -22,8 +22,8 @@ var builderApp = new Vue({
     addNewContainer : function(){
       this.containers.push({'width':'1/6'});
     },
-    deleteContainer : function(k){
-      this.containers.splice(k, 1);
+    deleteContainer : function(index){
+      this.containers.splice(index, 1);
     }
   }
 });

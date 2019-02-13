@@ -57,16 +57,17 @@
     >Add a New Container!</button>
     <cmscontainer
       v-for='(container, key) in containers'
-      v-bind:k='key'
+      v-bind:fraction='container.width'
+      v-bind:index='key'
     ></cmscontainer>
 
   </div>
 
   <template id="cmscontainer">
-    <div class="square" data-width="0" style="width: calc(16.666666666666668% - 2em);">
+    <div class="square" style="width: calc(16.666666666666668% - 2em);">
       <div class="subtract">-</div>
       <div class="add">+</div>
-      <div class="info">1/6</div>
+      <div class="info" v-text='fraction'></div>
       <div class="delete" v-on:click="removeEl()">X</div>
       <div class="move"></div>
     </div>
