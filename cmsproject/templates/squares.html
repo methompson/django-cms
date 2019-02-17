@@ -3,50 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style media="screen">
-    .square {
-      border-left: 3px solid yellow;
-      border-right: 3px solid yellow;
-      box-sizing: border-box;
-      background-color: yellow;
-      margin: 1em;
-      height: 10em;
-      position: relative;
-    }
 
-    .square .add,
-    .square .subtract,
-    .square .info,
-    .square .delete {
-      float: left;
-      border: 1px solid black;
-      background-color: #999;
-      padding: 5px;
-
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    .square .delete {
-      float: right;
-    }
-
-    .move {
-      cursor: move;
-      height: 1em;
-      padding: 5px;
-      border: 1px solid rgba(0,0,0,0.3);
-      background-color: rgba(0,0,0,0.2);
-      text-align: center;
-    }
-  </style>
 
   <title>Squares</title>
   <script src="{% static 'cms/js/vue-dev.js' %}" type="text/javascript"></script>
+  <link rel="stylesheet" href="{% static 'cms/css/style.css' %}">
 
 </head>
 <body>
@@ -55,21 +16,46 @@
     <button id="addNewContainer"
       v-on:click="addNewContainer()"
     >Add a New Container!</button>
-    <cmscontainer
-      v-for='(container, key) in containers'
-      v-bind:fraction='container.width'
-      v-bind:index='key'
-    ></cmscontainer>
+    <div class='container'>
+      <cmscontainer
+        v-for='(container, key) in containers' :key='i'
+        v-bind:width_name='container.width_name'
+        v-bind:width_id='container.width_id'
+        v-bind:width='container.width'
+        v-bind:draggable='container.draggable'
+        v-bind:id='container.id'
+        v-bind:index='key'
+      ></cmscontainer>
+    </div>
+    <div
+    v-text='serial_export'
+    ></div>
 
   </div>
 
   <template id="cmscontainer">
-    <div class="square" style="width: calc(16.666666666666668% - 2em);">
-      <div class="subtract">-</div>
-      <div class="add">+</div>
-      <div class="info" v-text='fraction'></div>
-      <div class="delete" v-on:click="removeEl()">X</div>
-      <div class="move"></div>
+    <div class="square"
+    v-bind:style="widthStyle"
+    v-bind:draggable="draggable"
+    v-on:dragend="dragEnd"
+    v-on:dragover="dragOver"
+    v-on:drop="drop"
+    v-on:dragLeave="dragLeave"
+    >
+      <div class="controls">
+        <div class="subtract"
+        v-on:click="decreaseSize()"
+        >-</div>
+        <div class="add"
+        v-on:click="increaseSize()"
+        >+</div>
+        <div class="info" v-text='width_name'></div>
+        <div class="delete" v-on:click="removeEl()">X</div>
+        <div class="move"
+        v-on:mousedown="dragstart()"
+        v-on:mouseup="dragEnd()"
+        ></div>
+      </div>
     </div>
   </template>
 
