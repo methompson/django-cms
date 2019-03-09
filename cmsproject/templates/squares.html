@@ -1,63 +1,94 @@
-{% load static %}
-
-<!DOCTYPE html>
+{% load static %}<!DOCTYPE html>
 <html>
 <head>
 
 
-  <title>Squares</title>
-  <script src="{% static 'cms/js/vue-dev.js' %}" type="text/javascript"></script>
-  <link rel="stylesheet" href="{% static 'cms/css/style.css' %}">
+    <title>Squares</title>
+    <script src="{% static 'cms/js/vue-dev.js' %}" type="text/javascript"></script>
+    <link rel="stylesheet" href="{% static 'cms/css/style.css' %}">
 
 </head>
 <body>
-  <div id="builder">
+    <div id="builder">
 
-    <button id="addNewContainer"
-      v-on:click="addNewContainer()"
-    >Add a New Container!</button>
-    <div class='container'>
-      <cmscontainer
-        v-for='(container, key) in containers' :key='i'
-        v-bind:width_name='container.width_name'
-        v-bind:width_id='container.width_id'
-        v-bind:width='container.width'
-        v-bind:draggable='container.draggable'
-        v-bind:id='container.id'
-        v-bind:index='key'
-      ></cmscontainer>
-    </div>
-    <div
-    v-text='serial_export'
-    ></div>
+        <button id="addNewContainer"
+            v-on:click="addNewContainer()"
+        >Add a New Container!</button>
 
-  </div>
+        <div class='container'>
+            <cmscontainer
+                v-for='(container, key) in all_containers' :key='key'
+                v-bind:width_name='container.width_name'
+                v-bind:width_id='container.width_id'
+                v-bind:width='container.width'
+                v-bind:draggable='container.draggable'
+                v-bind:id='container.id'
+                v-bind:index='key'
+                v-bind:components='container.components'
+                v-on:increase_size='increaseSize'
+                v-on:decrease_size="decreaseSize"
+                v-on:start_drag="startDrag"
+                v-on:delete="deleteContainer"
+                v-on:drop="dropContainer"
+            ></cmscontainer>
+        </div>
 
-  <template id="cmscontainer">
-    <div class="square"
-    v-bind:style="widthStyle"
-    v-bind:draggable="draggable"
-    v-on:dragend="dragEnd"
-    v-on:dragover="dragOver"
-    v-on:drop="drop"
-    v-on:dragLeave="dragLeave"
-    >
-      <div class="controls">
-        <div class="subtract"
-        v-on:click="decreaseSize()"
-        >-</div>
-        <div class="add"
-        v-on:click="increaseSize()"
-        >+</div>
-        <div class="info" v-text='width_name'></div>
-        <div class="delete" v-on:click="removeEl()">X</div>
-        <div class="move"
-        v-on:mousedown="dragstart()"
-        v-on:mouseup="dragEnd()"
+        <div
+            v-text='serial_export'
         ></div>
-      </div>
+
     </div>
-  </template>
+
+    <template id="cmscontainer">
+        <div class="square"
+            v-bind:style="widthStyle"
+            v-bind:draggable="draggable"
+            v-on:dragend="dragEnd"
+            v-on:dragover="dragOver"
+            v-on:drop="drop"
+            v-on:dragLeave="dragLeave"
+        >
+            <div class="controls">
+                <div class="subtract" v-on:click="decreaseSize()" >-</div>
+                <div class="add" v-on:click="increaseSize()" >+</div>
+                <div class="info" v-text='width_name'></div>
+                <div class="delete" v-on:click="removeEl()">X</div>
+                <div class="move"
+                    v-on:mousedown="dragstart()"
+                    v-on:mouseup="dragEnd()"
+                ></div>
+            </div>
+            <button v-on:click="addComponentDialog">Add Component</button>
+            <componentpicker
+                v-if="showComponentList"
+                v-on:cancel_component="cancelComponent"
+            ></componentpicker>
+        </div>
+    </template>
+
+    <template id="componentpicker">
+        <div class='componentPicker'
+            v-on:click="cancel"
+        >
+            <div class="componentList" v-on:click.stop="" >
+                <div class="componentListItem textComponent" v-on:click="addComponent('text')">
+                    Text Component
+                </div>
+
+                <div class="componentListItem markdownComponent" v-on:click="addComponent('markdown')">
+                    Rich Text Component
+                </div>
+
+                <div class="componentListItem htmlComponent" v-on:click="addComponent('html')">
+                    HTML Component
+                </div>
+
+                <div class="componentListItem imageComponent" v-on:click="addComponent('image')">
+                    Image Component
+                </div>
+            </div>
+        </div>
+    </template>
 
   <script src="{% static 'cms/js/builder.js' %}"></script>
 
